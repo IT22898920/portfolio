@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import WorkImage from "./WorkImage";
 import ProjectModal from "./ProjectModal";
 
@@ -8,7 +8,7 @@ import { useGSAP } from "@gsap/react";
 
 import "./styles/Work.css";
 
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 interface Project {
   name: string;
@@ -90,6 +90,8 @@ const projects: Project[] = [
 const Work = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const flexRef = useRef<HTMLDivElement>(null);
 
   const openModal = (project: Project) => {
     setSelectedProject(project);
@@ -105,59 +107,51 @@ const Work = () => {
     // Check if screen is wide enough for horizontal scroll
     const isDesktop = window.innerWidth > 1024;
 
-    if (!isDesktop) {
-      // On mobile/tablet, don't apply horizontal scroll animation
+    if (!isDesktop || !flexRef.current || !sectionRef.current) {
       return;
     }
 
-    let translateX: number = 0;
+    const workFlex = flexRef.current;
+    const workSection = sectionRef.current;
+    const boxes = workFlex.querySelectorAll(".work-box");
 
-    function setTranslateX() {
-      const box = document.getElementsByClassName("work-box");
-      if (!box.length) return;
+    // Calculate total width of all boxes
+    const boxWidth = boxes[0]?.getBoundingClientRect().width || 600;
+    const totalBoxesWidth = boxWidth * boxes.length;
+    const scrollAmount = totalBoxesWidth - window.innerWidth + 200;
 
-      const rectLeft = document
-        .querySelector(".work-container")!
-        .getBoundingClientRect().left;
-      const rect = box[0].getBoundingClientRect();
-      const parentWidth = box[0].parentElement!.getBoundingClientRect().width;
-      const padding: number =
-        parseInt(window.getComputedStyle(box[0]).padding) / 2;
-      translateX = rect.width * box.length - (rectLeft + parentWidth) + padding;
-    }
-
-    setTranslateX();
-
-    const timeline = gsap.timeline({
+    gsap.to(workFlex, {
+      x: -scrollAmount,
+      ease: "none",
       scrollTrigger: {
-        trigger: ".work-section",
+        trigger: workSection,
         start: "top top",
-        end: `+=${translateX}`,
-        scrub: true,
+        end: `+=${scrollAmount}`,
+        scrub: 1,
         pin: true,
         id: "work",
         invalidateOnRefresh: true,
       },
     });
 
-    timeline.to(".work-flex", {
-      x: -translateX,
-      ease: "none",
-    });
+    // Refresh after content loads
+    const refreshTimer = setTimeout(() => {
+      ScrollTrigger.refresh(true);
+    }, 1000);
 
     // Clean up
     return () => {
-      timeline.kill();
+      clearTimeout(refreshTimer);
       ScrollTrigger.getById("work")?.kill();
     };
   }, []);
   return (
-    <div className="work-section" id="work">
+    <div className="work-section" id="work" ref={sectionRef}>
       <div className="work-container section-container">
         <h2>
           My <span>Work</span>
         </h2>
-        <div className="work-flex">
+        <div className="work-flex" ref={flexRef}>
           {projects.map((project, index) => (
             <div
               className="work-box"

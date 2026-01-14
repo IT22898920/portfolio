@@ -72,17 +72,24 @@
   flex-direction: column;
   max-height: 90vh;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .modal-video-container {
   width: 100%;
+  height: 45vh;
   background: #000;
   position: relative;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .modal-video-container video {
   width: 100%;
-  max-height: 55vh;
+  height: 100%;
   object-fit: contain;
   display: block;
 }
@@ -221,8 +228,8 @@
     font-size: 24px;
   }
 
-  .modal-video-container video {
-    max-height: 40vh;
+  .modal-video-container {
+    height: 35vh;
   }
 
   .modal-description {
@@ -268,7 +275,7 @@
     font-size: 16px;
   }
 
-  .modal-video-container video {
-    max-height: 35vh;
+  .modal-video-container {
+    height: 30vh;
   }
 }

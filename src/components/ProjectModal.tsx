@@ -23,6 +23,7 @@ interface Props {
 const ProjectModal = ({ project, isOpen, onClose }: Props) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -32,6 +33,10 @@ const ProjectModal = ({ project, isOpen, onClose }: Props) => {
     if (isOpen) {
       document.addEventListener("keydown", handleEscape);
       document.body.style.overflow = "hidden";
+      // Reset scroll position to top when modal opens
+      if (contentRef.current) {
+        contentRef.current.scrollTop = 0;
+      }
     }
 
     return () => {
@@ -66,7 +71,7 @@ const ProjectModal = ({ project, isOpen, onClose }: Props) => {
           <IoClose />
         </button>
 
-        <div className="modal-content">
+        <div className="modal-content" ref={contentRef}>
           <div className="modal-video-container">
             <video
               ref={videoRef}
