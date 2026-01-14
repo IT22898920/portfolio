@@ -66,5 +66,3 @@ backup/
 # Debug
 *.map
 
-# Large video files
-public/videos/
