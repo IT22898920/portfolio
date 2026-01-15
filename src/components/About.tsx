@@ -11,7 +11,7 @@ const About = () => {
           Localseo (Pvt) Ltd for over a year, I specialize in building modern
           web applications with clean user interfaces and efficient backends.
           I love creating innovative solutions that solve real-world problems
-          and enhance user experiences.
+          and enhance user  experiences.
         </p>
       </div>
     </div>
