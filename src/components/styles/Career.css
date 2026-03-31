@@ -74,6 +74,15 @@
   margin: 10px 0px;
   color: var(--accentColor);
 }
+.career-info h5 a {
+  color: var(--accentColor);
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+.career-info h5 a:hover {
+  opacity: 0.7;
+  text-decoration: underline;
+}
 .career-timeline {
   position: absolute;
   top: -50px;

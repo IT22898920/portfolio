@@ -49,13 +49,37 @@ const Career = () => {
                 <h4>Full Stack Developer</h4>
                 <h5>Localseo (Pvt) Ltd</h5>
               </div>
+              <h3>2025</h3>
+            </div>
+            <p>
+              Worked as a permanent Full Stack Developer, building and
+              maintaining web applications. Applied full-stack development
+              skills with focus on both frontend and backend technologies,
+              API development, and delivering high-quality solutions for clients.
+            </p>
+          </div>
+          <div className="career-info-box">
+            <div className="career-info-in">
+              <div className="career-role">
+                <h4>Founder & CEO</h4>
+                <h5>
+                  <a
+                    href="https://nextgen.pasanjith.dev/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    NextGen Web Solutions
+                  </a>
+                </h5>
+              </div>
               <h3>NOW</h3>
             </div>
             <p>
-              Working as a permanent Full Stack Developer, building and
-              maintaining web applications. Applying full-stack development
-              skills with focus on both frontend and backend technologies,
-              API development, and delivering high-quality solutions for clients.
+              Founded NextGen Web Solutions, a digital solutions agency
+              delivering cutting-edge web development, mobile apps, and
+              network solutions for businesses across Sri Lanka. Leading a
+              team that builds modern applications using Next.js, React,
+              Node.js, and cloud technologies.
             </p>
           </div>
         </div>

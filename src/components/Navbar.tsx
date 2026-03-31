@@ -73,6 +73,11 @@ const Navbar = () => {
               <HoverLinks text="CONTACT" />
             </a>
           </li>
+          <li>
+            <a href="https://nextgen.pasanjith.dev/" target="_blank" rel="noopener noreferrer">
+              <HoverLinks text="NEXTGEN" />
+            </a>
+          </li>
         </ul>
       </div>
 
