@@ -81,6 +81,7 @@ const ProjectModal = ({ project, isOpen, onClose }: Props) => {
               loop
               playsInline
               controls
+              preload="metadata"
             />
           </div>
 

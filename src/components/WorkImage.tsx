@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { MdArrowOutward } from "react-icons/md";
 
@@ -10,16 +10,33 @@ interface Props {
 }
 
 const WorkImage = (props: Props) => {
-  const [videoUrl, setVideoUrl] = useState("");
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
-    if (props.video) {
-      setVideoUrl(`/videos/${props.video}`);
-    }
+    if (!props.video || !containerRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsInView(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { rootMargin: "200px" }
+    );
+
+    observer.observe(containerRef.current);
+
+    return () => observer.disconnect();
   }, [props.video]);
 
+  const videoUrl = isInView && props.video ? `/videos/${props.video}` : "";
+
   return (
-    <div className="work-image">
+    <div className="work-image" ref={containerRef}>
       <a
         className="work-image-in"
         href={props.link}
@@ -32,7 +49,15 @@ const WorkImage = (props: Props) => {
           </div>
         )}
         {videoUrl ? (
-          <video src={videoUrl} autoPlay muted playsInline loop />
+          <video
+            src={videoUrl}
+            autoPlay
+            muted
+            playsInline
+            loop
+            preload="metadata"
+            poster={props.image}
+          />
         ) : (
           <img src={props.image} alt={props.alt} />
         )}
